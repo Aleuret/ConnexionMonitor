@@ -90,7 +90,7 @@ while True:
     results_log_df = results_log_df.append(test_results_df, ignore_index=True)
     results_log_df.to_csv(os.path.dirname(__file__)+'/ConnexionMonitorResults.csv',
                           decimal=",",
-                          index=False)
+                          index_label="index")
 
     logging.info('Waiting 1 minute...')
     time.sleep(60)
