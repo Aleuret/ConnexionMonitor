@@ -17,9 +17,6 @@ logging.basicConfig(filename=script_folder+'/ConnexionMonitorLog.log',
                     format='%(asctime)s %(message)s',
                     datefmt='%m/%d/%Y %I:%M:%S %p')
 
-# Initializing result dataframe & output location
-results_log_df = pd.DataFrame()
-
 # Initializing the speedtest target server (one in Bordeaux)
 logging.info('New session started')
 logging.info('Speedtest initialization...')
@@ -90,13 +87,12 @@ while True:
         test_results_df['timestamp'] = '%sZ' % datetime.datetime.utcnow().isoformat()
 
     logging.info('Appending results and writing output data to CSV file...')
-    results_log_df = results_log_df.append(test_results_df, ignore_index=True)
     # Append results to output CSV file, only writing headers if the output file doesn't already exist.
-    results_log_df.to_csv(script_folder+'/ConnexionMonitorResults.csv',
-                          decimal=",",
-                          mode='a',
-                          header=not os.path.exists(script_folder+'/ConnexionMonitorResults.csv'),
-                          index=False)
+    test_results_df.to_csv(script_folder+'/ConnexionMonitorResults.csv',
+                           decimal=",",
+                           mode='a',
+                           header=not os.path.exists(script_folder+'/ConnexionMonitorResults.csv'),
+                           index=False)
 
     logging.info('Waiting 1 minute...')
     time.sleep(60)
